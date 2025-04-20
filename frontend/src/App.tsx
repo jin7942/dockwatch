@@ -1,6 +1,7 @@
 // src/App.tsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DashboardPage from '@/pages/dashboard';
+
 // import LogsPage from '@/pages/logs';
 // import ContainersPage from '@/pages/containers';
 // import NotFoundPage from '@/pages/not-found';
