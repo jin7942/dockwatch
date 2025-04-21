@@ -6,7 +6,7 @@ import { RadialChart } from '@/components/ui/chart/radialChart';
 import { NetworkBarChart } from '@/components/ui/chart/networkBarChart';
 import { ContainerTable } from '@/components/ui/chart/containerTable';
 import DynamicBreadcrumbWrapper from '@/components/ui/custom/DynamicBreadcrumbWrapper';
-
+// fuck
 export default function Page() {
     const containerDataTmp = [
         {
