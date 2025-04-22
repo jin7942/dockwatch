@@ -9,8 +9,14 @@ interface ResourceChartProps {
 }
 
 export function ResourceChart({ data }: ResourceChartProps) {
+    const chartData = data.chart;
     const isNetwork = 'tx' in (data.chart?.[0] || {});
     const yDomain = isNetwork ? 1000 : 100;
+
+    const displayedData = chartData.map((item, i) => ({
+        ...item,
+        x: i + 1, // 항상 1 ~ 60
+    }));
 
     return (
         <Card className='w-full h-full'>
@@ -21,9 +27,9 @@ export function ResourceChart({ data }: ResourceChartProps) {
 
             <CardContent style={{ height: 200 }}>
                 <ResponsiveContainer width='100%' height='100%'>
-                    <AreaChart data={data.chart}>
+                    <AreaChart data={displayedData}>
                         <XAxis
-                            dataKey='index'
+                            dataKey='x'
                             type='number'
                             domain={[1, 60]}
                             reversed={false}

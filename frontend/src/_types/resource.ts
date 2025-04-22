@@ -42,3 +42,32 @@ export interface NetworkResourceData {
     info: ResourceInfo[];
     table: TableData;
 }
+
+export interface DiskOverview {
+    total: string; // 총 용량 (ex. "512 GB")
+    used: string; // 사용량 (ex. "340 GB")
+    available: string; // 남은 용량
+    usagePercent: number;
+}
+
+export interface ContainerDiskUsage {
+    containerName: string;
+    used: string; // "12.3 GB"
+    mountPath: string;
+}
+
+export interface MountDiskStatus {
+    mount: string; // "/var"
+    total: string;
+    used: string;
+    percent: string; // "66%"
+    type: string; // "SSD" or "HDD"
+}
+
+export interface DiskBarData {
+    mount: string;
+    total: string;
+    used: string;
+    percent: string; // 예: '66%'
+    type: string; // 예: 'SSD'
+}
