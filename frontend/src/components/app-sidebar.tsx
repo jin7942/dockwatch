@@ -13,7 +13,7 @@ const data = {
     user: {
         name: 'Guest',
         email: 'This is guest mode.',
-        avatar: '/avatars/shadcn.jpg',
+        avatar: '',
     },
     teams: [
         {
@@ -31,15 +31,15 @@ const data = {
             items: [
                 {
                     title: '사용량',
-                    url: '#',
+                    url: '/server/usage',
                 },
                 {
                     title: '네트워크',
-                    url: '#',
+                    url: '/server/network',
                 },
                 {
                     title: '파일',
-                    url: '#',
+                    url: '/server/disk',
                 },
             ],
         },

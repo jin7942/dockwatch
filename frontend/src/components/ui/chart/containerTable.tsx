@@ -3,10 +3,10 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Circle } from 'lucide-react';
 
-interface ContainerInfo {
+export interface ContainerInfo {
     name: string;
     image: string;
-    status: string;
+    status: 'running' | 'exited' | 'error';
     cpu: string;
     memory: string;
 }
