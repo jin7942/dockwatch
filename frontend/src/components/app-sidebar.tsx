@@ -50,11 +50,11 @@ const data = {
             items: [
                 {
                     title: '실시간 로그',
-                    url: '#',
+                    url: '/logs/live',
                 },
                 {
                     title: '로그 보기',
-                    url: '#',
+                    url: '/logs/view',
                 },
             ],
         },
