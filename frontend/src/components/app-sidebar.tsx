@@ -69,6 +69,21 @@ const data = {
                 },
             ],
         },
+        {
+            title: '프록시',
+            url: '#',
+            icon: BookOpen,
+            items: [
+                {
+                    title: '설정',
+                    url: '/proxy/setting',
+                },
+                {
+                    title: '네트워크',
+                    url: '/proxy/network',
+                },
+            ],
+        },
     ],
 };
 
