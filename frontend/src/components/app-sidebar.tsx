@@ -64,12 +64,8 @@ const data = {
             icon: BookOpen,
             items: [
                 {
-                    title: '배포 상태',
-                    url: '#',
-                },
-                {
-                    title: '실행 제어',
-                    url: '#',
+                    title: '배포상태',
+                    url: '/container/info',
                 },
             ],
         },
