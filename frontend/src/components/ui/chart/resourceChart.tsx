@@ -2,7 +2,7 @@
 
 import { AreaChart, Area, YAxis, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import type { ResourceFullData, NetworkResourceData, ChartData } from '@/_types/resource';
+import type { ResourceFullData, NetworkResourceData, ChartData } from '@/_types/api';
 
 interface ResourceChartProps {
     data: ResourceFullData | NetworkResourceData;

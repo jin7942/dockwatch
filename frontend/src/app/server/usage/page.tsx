@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ResourceChart } from '@/components/ui/chart/resourceChart';
 import { Table } from '@/components/ui/table/table';
-import type { ResourceFullData, ResourceInfo, TableData } from '@/_types/resource';
+import type { ResourceFullData, ResourceInfo, TableData } from '@/_types/api';
 
 const defaultTable: TableData = {
     columns: [

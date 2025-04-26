@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ResourceChart } from '@/components/ui/chart/resourceChart';
 import { Table } from '@/components/ui/table/table';
-import type { NetworkResourceData } from '@/_types/resource';
+import type { NetworkResourceData } from '@/_types/api';
 
 export default function NetworkPage() {
     const [data, setData] = useState<NetworkResourceData>({

@@ -11,8 +11,8 @@ const diskMock = {
         { containerName: 'mysql-db', used: '27.6 GB', mountPath: '/var/lib/mysql' },
     ],
     mount: [
-        { mount: '/', total: '512 GB', used: '340 GB', percent: '66%', type: 'SSD' },
-        { mount: '/mnt/data', total: '2 TB', used: '1.3 TB', percent: '65%', type: 'HDD' },
+        { mount: '/', total: '512 GB', used: '340 GB', percent: 66, type: 'SSD' },
+        { mount: '/mnt/data', total: '2 TB', used: '1.3 TB', percent: 65, type: 'HDD' },
     ],
 };
 export default function DiskPage() {

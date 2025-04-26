@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ResourceChart } from '@/components/ui/chart/resourceChart';
 import { LogBox } from '@/components/ui/custom/LogBox';
 
-import type { ResourceFullData, NetworkResourceData } from '@/_types/resource';
+import type { ResourceFullData, NetworkResourceData } from '@/_types/api';
 
 const mockContainer = {
     name: 'ray-server',

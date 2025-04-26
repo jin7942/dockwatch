@@ -1,6 +1,6 @@
 'use client';
 
-import { DiskBarData } from '@/_types/resource';
+import { DiskBarData } from '@/_types/api';
 
 export function DiskBar({ data }: { data: DiskBarData }) {
     const percent = parseInt(data.percent);
