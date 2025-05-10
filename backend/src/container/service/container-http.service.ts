@@ -1,54 +1,22 @@
 import { ContainerVo } from '../dto/container-http.vo';
 import { ContainerDto } from '../dto/container-http.dto';
-import { execDockerCommand } from '../../common/utils/docker-util';
 import { CustomError } from '../../common/error/custom-error';
 import { HttpStatus } from '../../common/types/http-status.enum';
 
-interface DockerInspect {
-    Id: string;
-    Name: string;
-    Config: {
-        Image: string;
-    };
-    State: {
-        Status: string;
-    };
-    NetworkSettings: {
-        Ports: Record<string, { HostIp: string; HostPort: string }[]>;
-        Networks: Record<string, unknown>;
-    };
-    GraphDriver?: {
-        Data?: {
-            MergedDir?: string;
-        };
-    };
-}
+import { ResponseVo, AgentRes } from '../../common/types/response.vo';
+import { agent } from '../../common/middleware/agent-api';
 
 export class ContainerService {
     /**
      * 컨테이너 리스트 조회
      * @returns  컨테이너 리스트
      */
-    public getContainerList = async (): Promise<ContainerVo[]> => {
-        const result = await execDockerCommand(
-            [
-                'ps',
-                '-a',
-                '--format',
-                '{{.ID}} {{.Names}} {{.Image}} {{.Status}} {{.Ports}} {{.Network}}',
-            ],
-            '컨테이너 리스트 조회 실패',
-        );
-
-        const containerList: ContainerVo[] = result
-            .split('\n')
-            .filter((line) => line)
-            .map((line) => {
-                const [id, name, image, status, ports, network] = line.split(/\s+/);
-                return { id, name, image, status, ports, network };
-            });
-
-        return containerList;
+    public getContainerList = async (): Promise<AgentRes<ContainerVo[]>> => {
+        const res = await agent.get<ResponseVo<ContainerVo[]>>('/api/container/list');
+        return {
+            status: res.status,
+            data: res.data,
+        };
     };
 
     /**
@@ -57,38 +25,14 @@ export class ContainerService {
      * @param containerId 컨테이너 ID
      * @returns 디스크 사용량이 포함된 컨테이너 객체
      */
-    public getContainerInfo = async (containerId: string): Promise<ContainerVo> => {
-        // 1. 컨테이너 inspect 정보 가져오기
-        const inspectRaw = await execDockerCommand(
-            ['inspect', containerId],
-            '컨테이너 상세 정보 조회 실패',
-        );
-
-        const [data]: DockerInspect[] = JSON.parse(inspectRaw);
-
-        const id = data.Id.slice(0, 12);
-        const name = data.Name.replace(/^\//, '');
-        const image = data.Config.Image;
-        const status = data.State.Status; // 'running' | 'exited' 등
-        const ports = Object.entries(data.NetworkSettings.Ports || {})
-            .map(([port, val]) => `${val?.[0]?.HostIp}:${val?.[0]?.HostPort} → ${port}`)
-            .join(', ');
-        const network = Object.keys(data.NetworkSettings.Networks || {}).join(', ');
-
-        // 2. 디스크 사용량 계산
-        const mountPath = data.GraphDriver?.Data?.MergedDir;
-        let diskUsage: number | undefined = undefined;
-
-        if (mountPath) {
-            const duOutput = await execDockerCommand(
-                ['du', '-sb', mountPath],
-                '디스크 사용량 조회 실패',
-            );
-            diskUsage = parseInt(duOutput.split('\t')[0], 10);
-        }
-
-        const resData: ContainerVo = { id, name, image, status, ports, network, diskUsage };
-        return resData;
+    public getContainerInfo = async (containerId: string): Promise<AgentRes<ContainerVo>> => {
+        const res = await agent.get<ResponseVo<ContainerVo>>(`/api/container/info`, {
+            params: { containerId },
+        });
+        return {
+            status: res.status,
+            data: res.data,
+        };
     };
 
     /**
@@ -96,14 +40,14 @@ export class ContainerService {
      * @param containerId 확인할 컨테이너 ID
      * @returns 컨테이너가 실행중인지 여부 true / false
      */
-    public getContainerStatus = async (containerId: string): Promise<boolean> => {
-        const result = await execDockerCommand(
-            ['ps', '-a', '--format', '{{.ID}}'],
-            '컨테이너 상태 조회 실패',
-        );
-
-        const containerIds: string[] = result.split('\n').filter((id) => id);
-        return containerIds.includes(containerId);
+    public getContainerStatus = async (containerId: string): Promise<AgentRes<boolean>> => {
+        const res = await agent.get<ResponseVo<boolean>>(`/api/container/status`, {
+            params: { containerId },
+        });
+        return {
+            status: res.status,
+            data: res.data,
+        };
     };
 
     /**
@@ -114,13 +58,13 @@ export class ContainerService {
      * @param dto containerId를 포함한 dto 객체
      */
     public startContainer = async (dto: ContainerDto): Promise<void> => {
-        const status: boolean = await this.getContainerStatus(dto.id);
+        const res: AgentRes<boolean> = await this.getContainerStatus(dto.id);
 
-        if (!status) {
+        if (!res.data) {
             throw new CustomError(HttpStatus.CONFLICT, '이미 실행중인 컨테이너입니다.');
         }
 
-        await execDockerCommand(['start', dto.id], '컨테이너 시작 실패');
+        await agent.post('/api/container/start', dto);
     };
 
     /**
@@ -131,13 +75,13 @@ export class ContainerService {
      * @param dto containerId를 포함한 dto 객체
      */
     public stopContainer = async (dto: ContainerDto): Promise<void> => {
-        const status: boolean = await this.getContainerStatus(dto.id);
+        const res: AgentRes<boolean> = await this.getContainerStatus(dto.id);
 
-        if (!status) {
+        if (!res.data) {
             throw new CustomError(HttpStatus.CONFLICT, '이미 중지된 컨테이너입니다.');
         }
 
-        await execDockerCommand(['stop', dto.id], '컨테이너 중지 실패');
+        await agent.post('/api/container/stop', dto);
     };
 
     /**
@@ -148,12 +92,12 @@ export class ContainerService {
      * @param dto containerId를 포함한 dto 객체
      */
     public reStartContainer = async (dto: ContainerDto): Promise<void> => {
-        const status: boolean = await this.getContainerStatus(dto.id);
+        const res: AgentRes<boolean> = await this.getContainerStatus(dto.id);
 
-        if (!status) {
+        if (!res.data) {
             throw new CustomError(HttpStatus.CONFLICT, '재시작할 컨테이너가 실행 중이 아닙니다.');
         }
 
-        await execDockerCommand(['restart', dto.id], '컨테이너 재시작 실패');
+        await agent.post('/api/container/restart', dto);
     };
 }

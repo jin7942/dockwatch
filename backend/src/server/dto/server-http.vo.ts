@@ -24,7 +24,7 @@ export interface SysNetworkInfoVo {
     /** MAC 주소 (ex: '00:1B:44:11:3A:B7') */
     mac: string;
 
-    /** 링크 속도 (Mbps) */
+    /** 링크 속도 (bps) */
     speed: number;
 }
 

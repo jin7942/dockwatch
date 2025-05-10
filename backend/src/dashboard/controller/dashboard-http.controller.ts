@@ -1,5 +1,3 @@
-import { createResponseVo } from '../../common/utils/create-util';
-import { SysUsageVo } from '../dto/dashboard-http.vo';
 import { DashboardService } from '../service/dashboard-http.service';
 import { Request, Response } from 'express';
 
@@ -15,7 +13,7 @@ export class DashboardController {
      * @returns {SysUsageVo} 시스템 정보를 포함한 JSON 객체
      */
     public getSysUsage = async (req: Request, res: Response): Promise<void> => {
-        const resData: SysUsageVo = await this.dashboardService.getSysUsage();
-        res.status(200).json(createResponseVo(true, '대시보드 조회 성공', resData));
+        const resData = await this.dashboardService.getSysUsage();
+        res.status(resData.status).json(resData.data);
     };
 }

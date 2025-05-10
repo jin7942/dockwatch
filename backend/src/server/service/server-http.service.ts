@@ -1,5 +1,10 @@
 // interface 정의
-import { SysInfoVo, SysNetworkInfoVo, DiskUsageByMountVo } from '../dto/server-http.vo';
+import {
+    SysInfoVo,
+    SysNetworkInfoVo,
+    DiskUsageByMountVo,
+    DiskUsageByContainerVo,
+} from '../dto/server-http.vo';
 import { ResponseVo, AgentRes } from '../../common/types/response.vo';
 import { agent } from '../../common/middleware/agent-api';
 
@@ -49,8 +54,10 @@ export class ServerService {
      * 컨테이너별 디스크 사용량 조회
      * @returns  컨테이너별 디스크 사용량 배열
      */
-    public getDiskUsageByContainer = async (): Promise<AgentRes<DiskUsageByMountVo[]>> => {
-        const res = await agent.get<ResponseVo<DiskUsageByMountVo[]>>('/api/server/container-disk');
+    public getDiskUsageByContainer = async (): Promise<AgentRes<DiskUsageByContainerVo[]>> => {
+        const res = await agent.get<ResponseVo<DiskUsageByContainerVo[]>>(
+            '/api/server/container-disk',
+        );
         return {
             status: res.status,
             data: res.data,

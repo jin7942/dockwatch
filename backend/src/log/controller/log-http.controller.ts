@@ -1,8 +1,5 @@
-import { dir } from 'console';
 import { CustomError } from '../../common/error/custom-error';
 import { HttpStatus } from '../../common/types/http-status.enum';
-import { createResponseVo } from '../../common/utils/create-util';
-import { ContainerVo, LogFileContentVo, TreeNodeVo } from '../dto/log-http.vo';
 import { LogService } from './../service/log-http.service';
 import { Request, Response } from 'express';
 import { LogPathDto } from '../dto/log-http.dto';
@@ -17,8 +14,8 @@ export class LogController {
      * @returns {ContainerVo} 컨테이너 ID와 이름을 포함한 JSON 배열
      */
     public getRunningContainers = async (req: Request, res: Response): Promise<void> => {
-        const resData: ContainerVo[] = await this.logService.getRunningContainers();
-        res.status(200).json(createResponseVo(true, '실행중인 컨테이너 조회 성공', resData));
+        const resData = await this.logService.getRunningContainers();
+        res.status(resData.status).json(resData.data);
     };
 
     /**
@@ -32,12 +29,12 @@ export class LogController {
      * @returns {TreeNodeVo[]} 디렉터리 정보를 포함한 JSON 배열
      */
     public getDirectoryTree = async (req: Request, res: Response): Promise<void> => {
-        const dirPath: LogPathDto = req.body;
+        const dirPathDto: LogPathDto = req.body;
         // 유효성 검사
-        this.validDirPath(dirPath.path);
+        this.validDirPath(dirPathDto.path);
 
-        const resData: TreeNodeVo[] = await this.logService.getDirectoryTree(dirPath.path);
-        res.status(200).json(createResponseVo(true, '디렉터리 조회 성공', resData));
+        const resData = await this.logService.getDirectoryTree(dirPathDto);
+        res.status(resData.status).json(resData.data);
     };
 
     /**
@@ -54,8 +51,8 @@ export class LogController {
         // 유효성 검사
         this.validDirPath(filePathDto.path);
 
-        const resData: LogFileContentVo = await this.logService.getLogFile(filePathDto.path);
-        res.status(200).json(createResponseVo(true, '파일 조회 성공', resData));
+        const resData = await this.logService.getLogFile(filePathDto);
+        res.status(resData.status).json(resData.data);
     };
 
     /**

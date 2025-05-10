@@ -1,6 +1,4 @@
 import { Request, Response } from 'express';
-import { ResponseVo } from '../../common/types/response.vo';
-import { ContainerVo } from '../dto/container-http.vo';
 import { ContainerDto } from '../dto/container-http.dto';
 import { ContainerService } from '../service/container-http.service';
 import { createResponseVo } from '../../common/utils/create-util';
@@ -17,8 +15,8 @@ export class ContainerController {
      * @returns {ContainerVo[]} 컨테이너 리스트
      */
     public getContainerList = async (req: Request, res: Response): Promise<void> => {
-        const resData: ContainerVo[] = await this.containerService.getContainerList();
-        res.status(200).json(createResponseVo(true, '컨테이너 리스트 조회 성공', resData));
+        const resData = await this.containerService.getContainerList();
+        res.status(resData.status).json(resData.data);
     };
 
     /**
@@ -36,8 +34,8 @@ export class ContainerController {
             // 유효성 검사
             this.validContainerId(containerId);
 
-            const resData: ContainerVo = await this.containerService.getContainerInfo(containerId);
-            res.status(200).json(createResponseVo(true, '컨테이너 상태 조회 성공', resData));
+            const resData = await this.containerService.getContainerInfo(containerId);
+            res.status(resData.status).json(resData.data);
         } else {
             throw new CustomError(HttpStatus.BAD_REQUEST, '컨테이너 ID가 필요합니다.');
         }
@@ -58,8 +56,8 @@ export class ContainerController {
             // 유효성 검사
             this.validContainerId(containerId);
 
-            const resData: boolean = await this.containerService.getContainerStatus(containerId);
-            res.status(200).json(createResponseVo(true, '컨테이너 상태 조회 성공', resData));
+            const resData = await this.containerService.getContainerStatus(containerId);
+            res.status(resData.status).json(resData.data);
         } else {
             throw new CustomError(HttpStatus.BAD_REQUEST, '컨테이너 ID가 필요합니다.');
         }
