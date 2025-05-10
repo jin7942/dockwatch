@@ -13,3 +13,8 @@ export interface ResponseVo<T> {
     /** 실제 응답 데이터 */
     data: T;
 }
+
+export interface AgentRes<T> {
+    status: number;
+    data: ResponseVo<T>;
+}

@@ -2,7 +2,7 @@ import http from 'http';
 import app from './app';
 import { initWebSocketServer } from './ws/socket';
 
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 6000;
 
 // 1. HTTP 서버 생성
 const server = http.createServer(app);
