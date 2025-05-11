@@ -1,14 +1,10 @@
-import { ContainerWsService } from './../service/container-ws.service';
 import { ContainerController } from './container-http.controller';
-import os from 'os';
-import { setWsIntervalSender } from '../../common/utils/ws-util';
 import { WebSocket } from 'ws';
 import { IncomingMessage } from 'http';
+import { bridgeWebSocket } from '../../common/utils/ws-util';
 import { parse } from 'url';
 
 export class ContainerWsController {
-    private containerWsService = new ContainerWsService();
-    private hostname = os.hostname();
     private containerController = new ContainerController();
 
     /**
@@ -24,12 +20,11 @@ export class ContainerWsController {
 
         if (typeof containerId === 'string') {
             this.containerController.validContainerId(containerId);
-            setWsIntervalSender(
-                ws,
-                () => this.containerWsService.getUsageByContainer(containerId),
-                'container-usage',
-                this.hostname,
-            );
+            bridgeWebSocket({
+                req,
+                clientWs: ws,
+                route: 'container/resource',
+            });
         } else {
             ws.close(); // 잘못된 요청
         }

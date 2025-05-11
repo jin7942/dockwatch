@@ -1,14 +1,10 @@
 import { WebSocket } from 'ws';
-import { parse } from 'url';
-import os from 'os';
+import { bridgeWebSocket } from '../../common/utils/ws-util';
 import { IncomingMessage } from 'http';
-import { LogWsService } from '../service/log-ws.service';
-import { setWsStreamSender } from '../../common/utils/ws-util';
+import { parse } from 'url';
 import { ContainerController } from '../../container/controller/container-http.controller';
 
 export class LogWsController {
-    private logWsService = new LogWsService();
-    private hostname = os.hostname();
     private containerController = new ContainerController();
 
     /**
@@ -24,8 +20,11 @@ export class LogWsController {
 
         if (typeof containerId === 'string') {
             this.containerController.validContainerId(containerId);
-            const stream = this.logWsService.getLogStream(containerId);
-            setWsStreamSender(ws, stream, 'container-log', this.hostname);
+            bridgeWebSocket({
+                req,
+                clientWs: ws,
+                route: 'log/stream',
+            });
         } else {
             ws.close(); // 잘못된 요청
         }
