@@ -31,7 +31,7 @@ npm start
 
 # 2. API 명세서
 
-모든 HTTP/WS 엔드포인트와 요청/응답 형식은 [dockwatch-agent](https://github.com/jin7942/dockwatch-agent)와 동일하며 [DOCUMENT.md](https://github.com/jin7942/dockwatch-agent/DOCUMENT.md)에 정리되어 있습니다.
+모든 HTTP/WS 엔드포인트와 요청/응답 형식은 [dockwatch-agent](https://github.com/jin7942/dockwatch-agent)와 동일하며 [DOCUMENT.md](https://github.com/jin7942/dockwatch-agent/blob/main/DOCUMENT.md)에 정리되어 있습니다.
 
 # 3. 시스템 요구 사항
 
