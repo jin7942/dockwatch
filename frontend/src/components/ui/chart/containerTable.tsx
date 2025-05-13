@@ -1,19 +1,26 @@
 'use client';
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/table';
 import { Circle } from 'lucide-react';
 
 export interface ContainerInfo {
     name: string;
     image: string;
-    status: 'running' | 'exited' | 'error';
+    status: string;
     cpu: string;
     memory: string;
 }
 
 export function ContainerTable({ containers }: { containers: ContainerInfo[] }) {
     return (
-        <div className='rounded-md border'>
+        <div className="rounded-md border">
             <Table>
                 <TableHeader>
                     <TableRow>
@@ -27,10 +34,14 @@ export function ContainerTable({ containers }: { containers: ContainerInfo[] }) 
                 <TableBody>
                     {containers.map((container, idx) => (
                         <TableRow key={idx}>
-                            <TableCell className='font-medium'>{container.name}</TableCell>
+                            <TableCell className="font-medium">{container.name}</TableCell>
                             <TableCell>{container.image}</TableCell>
-                            <TableCell className='flex items-center gap-2'>
-                                <Circle className='h-3 w-3' fill={getStatusColor(container.status)} color={getStatusColor(container.status)} />
+                            <TableCell className="flex items-center gap-2">
+                                <Circle
+                                    className="h-3 w-3"
+                                    fill={getStatusColor(container.status)}
+                                    color={getStatusColor(container.status)}
+                                />
                                 {container.status}
                             </TableCell>
                             <TableCell>{container.cpu}</TableCell>

@@ -40,7 +40,15 @@ export const bridgeWebSocket = ({
     });
 
     agentWs.on('message', (data) => {
-        onMessage ? onMessage(data) : clientWs.send(data);
+        const msg = typeof data === 'string' ? data : data.toString();
+        try {
+            const parsed = JSON.parse(msg); // JSON 객체로 파싱 확인
+            clientWs.send(JSON.stringify(parsed)); // 다시 문자열로 보내기
+        } catch (e) {
+            console.error('Invalid JSON from agent:', e);
+            // fallback: raw 전송
+            clientWs.send(msg);
+        }
     });
 
     agentWs.on('close', () => {
