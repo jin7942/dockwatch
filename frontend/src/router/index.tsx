@@ -1,12 +1,23 @@
 import { createBrowserRouter } from 'react-router-dom';
 import DashboardPage from '../domains/dashboard/pages/DashboardPage';
+import { Layout } from '../layouts/Layout';
 // import ContainerPage from '../domains/container/pages/ContainerPage';
 // import LogPage from '../domains/log/pages/LogPage';
 // import ServerPage from '../domains/server/pages/ServerPage';
 
 export const router = createBrowserRouter([
-    { path: '/', element: <DashboardPage /> },
-    // { path: '/containers', element: <ContainerPage /> },
-    // { path: '/logs', element: <LogPage /> },
-    // { path: '/server/:hostname', element: <ServerPage /> },
+    {
+        path: '/',
+        element: <Layout />,
+        children: [
+            {
+                path: '',
+                element: <DashboardPage />,
+            },
+            {
+                path: 'server/usage',
+                element: <div>서버 사용량</div>,
+            },
+        ],
+    },
 ]);
