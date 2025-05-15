@@ -9,20 +9,20 @@ import {
     Paper,
 } from '@mui/material';
 
-export interface Column {
-    id: string;
+export interface Column<T> {
+    id: keyof T;
     label: string;
     align?: 'left' | 'right' | 'center';
     width?: number | string;
 }
 
-export interface TableComponentProps {
-    columns: Column[];
-    rows: Record<string, string>[];
-    onRowClick?: (id: string) => void;
+export interface TableComponentProps<T> {
+    columns: Column<T>[];
+    rows: T[];
+    onRowClick?: (row: T) => void;
 }
 
-export const TableComponent = ({ columns, rows, onRowClick }: TableComponentProps) => {
+export const TableComponent = <T,>({ columns, rows, onRowClick }: TableComponentProps<T>) => {
     return (
         <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
             <Table size="small">
@@ -30,7 +30,7 @@ export const TableComponent = ({ columns, rows, onRowClick }: TableComponentProp
                     <TableRow>
                         {columns.map((col) => (
                             <TableCell
-                                key={col.id}
+                                key={String(col.id)}
                                 align={col.align || 'left'}
                                 sx={{ fontWeight: 'bold', width: col.width }}
                             >
@@ -45,15 +45,12 @@ export const TableComponent = ({ columns, rows, onRowClick }: TableComponentProp
                         <TableRow
                             key={idx}
                             hover
-                            sx={{ cursor: 'pointer' }}
-                            onClick={() => {
-                                const id = row['id'] as string;
-                                if (onRowClick && id) onRowClick(id);
-                            }}
+                            sx={{ cursor: onRowClick ? 'pointer' : 'default' }}
+                            onClick={() => onRowClick?.(row)}
                         >
                             {columns.map((col) => (
-                                <TableCell key={col.id} align={col.align || 'left'}>
-                                    {row[col.id] as React.ReactNode}
+                                <TableCell key={String(col.id)} align={col.align || 'left'}>
+                                    {String(row[col.id as keyof T])}
                                 </TableCell>
                             ))}
                         </TableRow>
