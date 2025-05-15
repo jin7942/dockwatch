@@ -1,8 +1,29 @@
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import { RadialChart } from '../../../common/components/charts/RadialChart';
+import { TableComponent } from '../../../common/components/TableComponent';
+import type { Column } from '../../../common/components/TableComponent';
 
 const DashboardPage = () => {
+    const columns: Column[] = [
+        { id: 'name', label: '컨테이너 이름' },
+        { id: 'image', label: '이미지', align: 'center' },
+        { id: 'status', label: '상태', align: 'center' },
+        { id: 'cpu', label: 'CPU (%)', align: 'right' },
+        { id: 'memory', label: 'Memory (%)', align: 'right' },
+    ];
+
+    const rows = [
+        {
+            id: 'tmp',
+            name: 'ray-server',
+            image: 'nginx',
+            status: 'Running',
+            cpu: '34.7',
+            memory: '58.2',
+        },
+    ];
+
     return (
         <Box
             sx={{
@@ -118,7 +139,10 @@ const DashboardPage = () => {
                     borderRadius: 2,
                     bgcolor: 'background.paper',
                 }}
-            />
+            >
+                <TableComponent columns={columns} rows={rows} />;
+                {/* prop에 추가 onRowClick={(id) => navigate(`/container/${id}`) */}
+            </Paper>
         </Box>
     );
 };
