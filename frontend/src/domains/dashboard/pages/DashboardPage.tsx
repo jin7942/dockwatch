@@ -105,7 +105,6 @@ const DashboardPage = () => {
         { id: 'memory', label: 'Memory (%)', align: 'right' },
     ];
 
-    console.log(dashboardData.runningContainer);
     const rows: ContainerRow[] = useMemo(() => {
         return dashboardData.runningContainer.map((container) => ({
             id: container.id.toString(),
