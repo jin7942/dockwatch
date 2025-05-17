@@ -7,7 +7,6 @@ interface RadialChartProps {
     value: number; // 0 ~ 100 기준
     unit?: string; // % or h 등
 }
-// TODO: 네트워크 사용량, 서버 가동시간 그래프 고정되게 변경
 export const RadialChart = ({ label, value, unit = '%' }: RadialChartProps) => {
     value = Math.round(value * 100) / 100;
     return (
@@ -31,11 +30,11 @@ export const RadialChart = ({ label, value, unit = '%' }: RadialChartProps) => {
             {/* 차트 */}
             <Box sx={{ width: '80%', height: '80%' }}>
                 <Gauge
-                    value={value}
+                    value={unit == '%' ? value : 100}
                     valueMax={100}
                     startAngle={0}
                     endAngle={360}
-                    text={({ value }) => `${value}${unit ?? ''}`}
+                    text={`${value}${unit}`}
                     sx={{
                         width: '100%',
                         height: '100%',

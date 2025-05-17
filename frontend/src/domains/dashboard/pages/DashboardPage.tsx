@@ -26,8 +26,12 @@ interface ContainerInfo {
     ports: string;
     network: string;
     usage: {
-        cpuPercent: number;
-        memoryPercent: number;
+        cpu: {
+            percent: number;
+        };
+        memory: {
+            percent: number;
+        };
     };
 }
 
@@ -101,6 +105,7 @@ const DashboardPage = () => {
         { id: 'memory', label: 'Memory (%)', align: 'right' },
     ];
 
+    console.log(dashboardData.runningContainer);
     const rows: ContainerRow[] = useMemo(() => {
         return dashboardData.runningContainer.map((container) => ({
             id: container.id.toString(),
@@ -109,8 +114,8 @@ const DashboardPage = () => {
             status: container.status,
             port: container.ports,
             network: container.network,
-            cpu: container.usage.cpuPercent.toFixed(1),
-            memory: container.usage.memoryPercent.toFixed(1),
+            cpu: container.usage.cpu.percent?.toFixed(1) ?? '-',
+            memory: container.usage.memory.percent?.toFixed(1) ?? '-',
         }));
     }, [dashboardData.runningContainer]);
 
