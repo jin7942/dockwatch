@@ -29,6 +29,8 @@ export const Sidebar = () => {
     const [openLog, setOpenLog] = useState(true);
     const [openContainer, setOpenContainer] = useState(true);
 
+    const linkStyle = { p: 3, textDecoration: 'none', color: 'inherit' };
+
     return (
         <Drawer
             variant="permanent"
@@ -45,11 +47,7 @@ export const Sidebar = () => {
                 },
             }}
         >
-            <Box
-                sx={{ p: 3, textDecoration: 'none', color: 'inherit' }}
-                component={RouterLink}
-                to="/"
-            >
+            <Box sx={linkStyle} component={RouterLink} to="/">
                 <Typography variant="h6" fontWeight="bold">
                     DockWatch
                 </Typography>
@@ -75,7 +73,7 @@ export const Sidebar = () => {
                 </ListItemButton>
                 <Collapse in={openServer} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 6 }}>
+                        <ListItemButton component={RouterLink} to="/server/usage" sx={{ pl: 6 }}>
                             <ListItemText primary="사용량" />
                         </ListItemButton>
                         <ListItemButton sx={{ pl: 6 }}>
