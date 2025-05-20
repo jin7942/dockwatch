@@ -76,10 +76,18 @@ export const Sidebar = () => {
                         <ListItemButton component={RouterLink} to="/server/usage" sx={{ pl: 6 }}>
                             <ListItemText primary="사용량" />
                         </ListItemButton>
-                        <ListItemButton sx={{ pl: 6 }}>
+                        <ListItemButton
+                            component={RouterLink}
+                            to="/server/network-usage"
+                            sx={{ pl: 6 }}
+                        >
                             <ListItemText primary="네트워크" />
                         </ListItemButton>
-                        <ListItemButton sx={{ pl: 6 }}>
+                        <ListItemButton
+                            component={RouterLink}
+                            to="/server/disk-usage"
+                            sx={{ pl: 6 }}
+                        >
                             <ListItemText primary="파일" />
                         </ListItemButton>
                     </List>
