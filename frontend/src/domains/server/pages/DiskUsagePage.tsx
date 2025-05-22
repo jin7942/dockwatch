@@ -24,12 +24,12 @@ export const DiskUsagePage = () => {
 
     useEffect(() => {
         const fetchMount = async () => {
-            const res = await api.get('/api/server/mount-disk');
+            const res = await api.get('/server/mount-disk');
             setMounts(res.data.data);
         };
 
         const fetchContainer = async () => {
-            const res = await api.get('/api/server/container-disk');
+            const res = await api.get('/server/container-disk');
             setContainers(res.data.data);
         };
 
@@ -63,6 +63,7 @@ export const DiskUsagePage = () => {
         statusLabel: c.isActive ? 'Active' : 'Stopped',
     }));
 
+    console.log(mounts);
     return (
         <Box sx={{ px: 4, py: 3, display: 'grid', gap: 4 }}>
             <Typography variant="h5" fontWeight="bold">

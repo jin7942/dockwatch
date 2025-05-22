@@ -6,31 +6,45 @@ import { Layout } from '../layouts/Layout';
 import ServerUsagePage from '../domains/server/pages/ServerUsagePage';
 import NetworkUsagePage from '../domains/server/pages/NetworkUsagePage';
 import DiskUsagePage from '../domains/server/pages/DiskUsagePage';
-// import ContainerPage from '../domains/container/pages/ContainerPage';
-// import LogPage from '../domains/log/pages/LogPage';
-// import ServerPage from '../domains/server/pages/ServerPage';
 
+// LOG
+import LogLivePage from '../domains/log/pages/LogLivePage';
+
+// 도메인별 라우트 그룹
+const dashboardRoutes = [
+    {
+        path: '',
+        element: <DashboardPage />,
+    },
+];
+
+const serverRoutes = [
+    {
+        path: 'server/usage',
+        element: <ServerUsagePage />,
+    },
+    {
+        path: 'server/network-usage',
+        element: <NetworkUsagePage />,
+    },
+    {
+        path: 'server/disk-usage',
+        element: <DiskUsagePage />,
+    },
+];
+
+const logRoutes = [
+    {
+        path: 'log/live',
+        element: <LogLivePage />,
+    },
+];
+
+// 최종 라우터 구성
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
-        children: [
-            {
-                path: '',
-                element: <DashboardPage />,
-            },
-            {
-                path: 'server/usage',
-                element: <ServerUsagePage />,
-            },
-            {
-                path: 'server/network-usage',
-                element: <NetworkUsagePage />,
-            },
-            {
-                path: 'server/disk-usage',
-                element: <DiskUsagePage />,
-            },
-        ],
+        children: [...dashboardRoutes, ...serverRoutes, ...logRoutes],
     },
 ]);

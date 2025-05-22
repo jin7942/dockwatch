@@ -103,7 +103,7 @@ export const Sidebar = () => {
                 </ListItemButton>
                 <Collapse in={openLog} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 6 }}>
+                        <ListItemButton component={RouterLink} to="/log/live" sx={{ pl: 6 }}>
                             <ListItemText primary="실시간 로그" />
                         </ListItemButton>
                         <ListItemButton sx={{ pl: 6 }}>
