@@ -106,7 +106,7 @@ export const Sidebar = () => {
                         <ListItemButton component={RouterLink} to="/log/live" sx={{ pl: 6 }}>
                             <ListItemText primary="실시간 로그" />
                         </ListItemButton>
-                        <ListItemButton sx={{ pl: 6 }}>
+                        <ListItemButton component={RouterLink} to="/log/view" sx={{ pl: 6 }}>
                             <ListItemText primary="로그 보기" />
                         </ListItemButton>
                     </List>
@@ -122,19 +122,19 @@ export const Sidebar = () => {
                 </ListItemButton>
                 <Collapse in={openContainer} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 6 }}>
+                        <ListItemButton component={RouterLink} to="/container/info" sx={{ pl: 6 }}>
                             <ListItemText primary="배포상태" />
                         </ListItemButton>
                     </List>
                 </Collapse>
 
                 {/* 프록시 */}
-                <ListItemButton>
+                {/* <ListItemButton>
                     <ListItemIcon>
                         <SettingsEthernet sx={{ color: 'inherit' }} />
                     </ListItemIcon>
                     <ListItemText primary="프록시" />
-                </ListItemButton>
+                </ListItemButton> */}
             </List>
         </Drawer>
     );
