@@ -7,8 +7,7 @@ import { containerRouter } from './container/route/container-http.route';
 import { dashboardRouter } from './dashboard/route/dashboard-http.route';
 
 const app = express();
-// TODO: 개발용
-const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173']; // 허용할 도메인만 나열
+const allowedOrigins = process.env.ORIGIN_URL?.split(',') || [];
 
 // cors 설정
 app.use(
