@@ -1,8 +1,7 @@
 import http from 'http';
 import app from './app';
 import { initWebSocketServer } from './ws/socket';
-
-const PORT = process.env.PORT || 3738;
+import { CONFIG } from './common/_config/constants';
 
 // 1. HTTP 서버 생성
 const server = http.createServer(app);
@@ -11,6 +10,6 @@ const server = http.createServer(app);
 initWebSocketServer(server);
 
 // 3. HTTP 서버 시작
-server.listen(PORT, () => {
-    console.log(`dockwatch-agent is running on port ${PORT}`);
+server.listen(CONFIG.PORT, () => {
+    console.log(`dockwatch-agent is running on port ${CONFIG.PORT}`);
 });

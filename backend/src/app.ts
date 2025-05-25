@@ -6,14 +6,15 @@ import { logRouter } from './log/route/log-http.route';
 import { containerRouter } from './container/route/container-http.route';
 import { dashboardRouter } from './dashboard/route/dashboard-http.route';
 
+import { CONFIG } from './common/_config/constants';
+
 const app = express();
-const allowedOrigins = process.env.ORIGIN_URL?.split(',') || [];
 
 // cors 설정
 app.use(
     cors({
         origin: (origin, callback) => {
-            if (!origin || allowedOrigins.includes(origin)) {
+            if (!origin || CONFIG.ORIGIN_URL.includes(origin)) {
                 callback(null, true);
             } else {
                 callback(new Error('CORS 차단: 허용되지 않은 Origin'));
