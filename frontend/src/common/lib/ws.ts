@@ -1,4 +1,4 @@
-const BASE_WS_URL = 'ws://localhost:3738/ws';
+const BASE_WS_URL = 'ws://192.168.0.77:3738/ws';
 const sockets = new Map<string, WebSocket>();
 
 export function createWs(path: string): WebSocket {

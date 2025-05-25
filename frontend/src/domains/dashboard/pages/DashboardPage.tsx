@@ -117,7 +117,6 @@ const DashboardPage = () => {
             memory: container.usage.memory.percent?.toFixed(1) ?? '-',
         }));
     }, [dashboardData.runningContainer]);
-
     return (
         <Box
             sx={{

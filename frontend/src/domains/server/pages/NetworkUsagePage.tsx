@@ -19,21 +19,8 @@ interface NetUsage {
 }
 
 const NetworkUsagePage = () => {
-    // 네트워크 기본 정보 초기값 설정
-    const [netInfo, setNetInfo] = useState<NetInfo[]>([
-        {
-            interface: '',
-            ip4: '',
-            ip4Subnet: '',
-            mac: '',
-            speed: 0,
-        },
-    ]);
-
-    // 실시간 누적 데이터 (인터페이스별로 슬라이딩 윈도우)
-    const [streamData, setStreamData] = useState<Record<string, { rx: number; tx: number }[]>>({
-        '': [{ rx: 0, tx: 0 }],
-    });
+    const [netInfo, setNetInfo] = useState<NetInfo[]>([]);
+    const [streamData, setStreamData] = useState<Record<string, { rx: number; tx: number }[]>>({});
 
     const ws = useWs('/server/network');
 
@@ -73,43 +60,49 @@ const NetworkUsagePage = () => {
                 네트워크 사용량
             </Typography>
 
-            {netInfo.map((intf) => (
-                <Box
-                    key={intf.interface}
-                    sx={{
-                        border: '1px solid #334155',
-                        borderRadius: 2,
-                        p: 2,
-                        backgroundColor: '#1e293b',
-                        display: 'grid',
-                        gap: 2,
-                    }}
-                >
+            {netInfo
+                .filter((intf) => {
+                    const usage = streamData[intf.interface];
+                    if (!usage) return false;
+                    return usage.some((v) => v.rx > 0 || v.tx > 0);
+                })
+                .map((intf) => (
                     <Box
+                        key={intf.interface}
                         sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
+                            border: '1px solid #334155',
+                            borderRadius: 2,
+                            p: 2,
+                            backgroundColor: '#1e293b',
+                            display: 'grid',
+                            gap: 2,
                         }}
                     >
-                        <Typography variant="subtitle1" fontWeight="bold">
-                            {intf.interface}
-                        </Typography>
-                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                            {intf.ip4} / {intf.mac} / {Math.round(intf.speed / 1_000)} Kbps
-                        </Typography>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography variant="subtitle1" fontWeight="bold">
+                                {intf.interface}
+                            </Typography>
+                            <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                                {intf.ip4} / {intf.mac} / {Math.round(intf.speed / 1_000)} Kbps
+                            </Typography>
+                        </Box>
+
+                        <Divider sx={{ borderColor: '#475569' }} />
+
+                        <NetworkChart
+                            label={intf.interface}
+                            speed={intf.speed}
+                            data={streamData[intf.interface] ?? []}
+                            unit="Kbps"
+                        />
                     </Box>
-
-                    <Divider sx={{ borderColor: '#475569' }} />
-
-                    <NetworkChart
-                        label={intf.interface}
-                        speed={intf.speed}
-                        data={streamData[intf.interface] ?? []}
-                        unit="Kbps"
-                    />
-                </Box>
-            ))}
+                ))}
         </Box>
     );
 };

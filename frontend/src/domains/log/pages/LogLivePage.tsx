@@ -8,7 +8,7 @@ interface ContainerInfo {
     name: string;
 }
 
-const BASE_WS_URL = 'ws://localhost:3738/ws';
+const BASE_WS_URL = 'ws://192.168.0.77:3738/ws';
 
 export default function LogLivePage() {
     const [containerList, setContainerList] = useState<ContainerInfo[]>([]);
@@ -22,7 +22,7 @@ export default function LogLivePage() {
 
         const url = new URL(`${BASE_WS_URL}/log/stream`);
         url.searchParams.set('containerId', containerId);
-
+        console.log(url.toString());
         const ws = new WebSocket(url.toString());
         wsRef.current = ws;
 
@@ -36,7 +36,7 @@ export default function LogLivePage() {
         };
 
         ws.onerror = () => console.error('WebSocket 오류');
-        ws.onclose = () => console.info('WebSocket 종료');
+        ws.onclose = (e) => console.info('WebSocket 종료', e.code, e.reason);
     };
 
     useEffect(() => {
@@ -66,16 +66,17 @@ export default function LogLivePage() {
             </Typography>
 
             {containerList.length > 0 ? (
-                containerList.map((container) => (
-                    <Button
-                        variant="contained"
-                        sx={{ width: 'fit-content' }}
-                        key={container.id}
-                        onClick={() => getConnection(container.id)}
-                    >
-                        {container.name}
-                    </Button>
-                ))
+                <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                    {containerList.map((container) => (
+                        <Button
+                            variant="contained"
+                            key={container.id}
+                            onClick={() => getConnection(container.id)}
+                        >
+                            {container.name}
+                        </Button>
+                    ))}
+                </Box>
             ) : (
                 <Typography variant="h6" fontWeight="bold">
                     실행중인 컨테이너가 없습니다.
