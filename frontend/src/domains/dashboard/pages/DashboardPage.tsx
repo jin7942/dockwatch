@@ -79,7 +79,6 @@ const DashboardPage = () => {
             const data = JSON.parse(event.data);
             if (data.type === 'dashboard-usage') {
                 const { cpuPercent, memoryPercent, networkUsage, runningContainer } = data.data;
-
                 setDashboardData((prev) => ({
                     ...prev,
                     cpuPercent,

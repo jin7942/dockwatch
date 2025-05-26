@@ -2,13 +2,12 @@ import { Box, Button, Paper, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 
 import { api } from '../../../common/lib/axios';
+import { CONFIG } from '../../../common/_config/constants';
 
 interface ContainerInfo {
     id: string;
     name: string;
 }
-
-const BASE_WS_URL = 'ws://192.168.0.77:3738/ws';
 
 export default function LogLivePage() {
     const [containerList, setContainerList] = useState<ContainerInfo[]>([]);
@@ -17,10 +16,12 @@ export default function LogLivePage() {
     const wsRef = useRef<WebSocket | null>(null);
 
     const getConnection = (containerId: string) => {
+        // 기존 로그 제거
+        setLogs([]);
         // 이전 연결 종료
         wsRef.current?.close();
 
-        const url = new URL(`${BASE_WS_URL}/log/stream`);
+        const url = new URL(`${CONFIG.WS_BASE_URL}/log/stream`);
         url.searchParams.set('containerId', containerId);
         console.log(url.toString());
         const ws = new WebSocket(url.toString());
@@ -89,8 +90,7 @@ export default function LogLivePage() {
                     height: 500,
                     overflowY: 'auto',
                     p: 2,
-                    backgroundColor: '#000',
-                    color: '#0f0',
+
                     fontFamily: 'monospace',
                     display: 'grid',
                     gridAutoRows: 'max-content',
@@ -101,7 +101,7 @@ export default function LogLivePage() {
                         key={i}
                         variant="body2"
                         component="pre"
-                        sx={{ m: 0, whiteSpace: 'pre-wrap' }}
+                        sx={{ m: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
                     >
                         {line}
                     </Typography>

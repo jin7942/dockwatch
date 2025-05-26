@@ -1,8 +1,9 @@
-const BASE_WS_URL = 'ws://192.168.0.77:3738/ws';
+import { CONFIG } from '../_config/constants';
+
 const sockets = new Map<string, WebSocket>();
 
 export function createWs(path: string): WebSocket {
-    const fullUrl = `${BASE_WS_URL}${path}`;
+    const fullUrl = `${CONFIG.WS_BASE_URL}${path}`;
 
     if (sockets.has(fullUrl)) {
         const existing = sockets.get(fullUrl)!;
@@ -18,11 +19,11 @@ export function createWs(path: string): WebSocket {
 }
 
 export function getWs(path: string): WebSocket | null {
-    return sockets.get(`${BASE_WS_URL}${path}`) ?? null;
+    return sockets.get(`${CONFIG.WS_BASE_URL}${path}`) ?? null;
 }
 
 export function closeWs(path: string): void {
-    const fullUrl = `${BASE_WS_URL}${path}`;
+    const fullUrl = `${CONFIG.WS_BASE_URL}${path}`;
     const socket = sockets.get(fullUrl);
     if (socket) {
         socket.close();
