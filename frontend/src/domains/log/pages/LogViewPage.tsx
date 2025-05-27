@@ -1,10 +1,17 @@
 import { Box, Button, Paper, TextField, Typography, useTheme, Divider } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 const containerList = ['nextuse-api', 'ray-server', 'upload-server'];
 const logLevels = ['ALL', 'INFO', 'WARN', 'ERROR'];
 
 export default function LogViewPage() {
     const theme = useTheme();
+
+    const [rootNodes, setRootNodes] = useState([]);
+
+    useEffect(() => {
+        // 최초 1단계 디렉터리 로드
+    }, []);
 
     return (
         <Box
