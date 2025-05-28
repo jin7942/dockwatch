@@ -179,7 +179,6 @@ const DashboardPage = () => {
                     bgcolor: 'background.paper',
                 }}
             >
-                // TODO: 라우팅 추가
                 <TableComponent columns={columns} rows={rows} />
             </Paper>
         </Box>

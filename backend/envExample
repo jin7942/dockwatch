@@ -1,4 +1,0 @@
-ORIGIN_URL=https://frontend.com
-AGENT_BASE_URL=http://host.docker.internal:7000
-CONTAINER_CONTROL_KEY=THIS_IS_SECRET_KEY
-PORT=3738

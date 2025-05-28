@@ -1,29 +1,39 @@
-import { Box, Button, Chip, Paper, Typography, useTheme } from '@mui/material';
+import { Box, Chip, Paper, Typography, Button } from '@mui/material';
+import { useState, useEffect } from 'react';
+
+import { api } from '../../../common/lib/axios';
+import { useNavigate } from 'react-router-dom';
 
 interface ContainerInfo {
+    id: string;
     name: string;
-    tag: string;
-    port: string;
-    status: 'RUNNING' | 'EXITED';
+    image: string;
+    status: string;
+    ports: string;
+    network: string;
 }
 
-const mockContainers: ContainerInfo[] = [
-    {
-        name: 'nextuse-api',
-        tag: 'nextuse:latest',
-        port: '3000:3000',
-        status: 'RUNNING',
-    },
-    {
-        name: 'ray-server',
-        tag: 'ray:1.4.1',
-        port: '7979:7979',
-        status: 'EXITED',
-    },
-];
-
 export default function ContainerPage() {
-    const theme = useTheme();
+    const [containerList, setContainerList] = useState<ContainerInfo[]>([
+        {
+            id: '',
+            name: '',
+            image: '',
+            status: '',
+            ports: '',
+            network: '',
+        },
+    ]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const getInfo = async () => {
+            const res = await api.get('/container/list');
+            setContainerList(res.data.data);
+        };
+
+        getInfo();
+    }, []);
 
     return (
         <Box sx={{ px: 4, py: 3, display: 'grid', gap: 2 }}>
@@ -31,13 +41,13 @@ export default function ContainerPage() {
                 컨테이너 목록
             </Typography>
 
-            {mockContainers.map((container, idx) => (
+            {containerList.map((container) => (
                 <Paper
-                    key={idx}
+                    key={container.id}
+                    onClick={() => navigate(`/container/${container.id}`)}
                     sx={{
                         p: 2,
                         borderRadius: 2,
-                        backgroundColor: theme.palette.background.paper,
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
@@ -51,18 +61,20 @@ export default function ContainerPage() {
                             {container.name}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {container.tag}
+                            {container.image}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Port: {container.port}
+                            {container.ports}
                         </Typography>
                     </Box>
 
                     {/* 우측: 상태 뱃지 + 제어 버튼 */}
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography variant="body2" color="text.secondary">
+                            {container.network}
+                        </Typography>
                         <Chip
                             label={container.status}
-                            color={container.status === 'RUNNING' ? 'primary' : 'error'}
                             size="small"
                             sx={{
                                 fontWeight: 'bold',

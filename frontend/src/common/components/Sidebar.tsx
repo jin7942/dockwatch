@@ -10,14 +10,7 @@ import {
     Typography,
     Divider,
 } from '@mui/material';
-import {
-    ExpandLess,
-    ExpandMore,
-    Storage,
-    Layers,
-    SettingsEthernet,
-    Description,
-} from '@mui/icons-material';
+import { ExpandLess, ExpandMore, Storage, Layers, Description } from '@mui/icons-material';
 
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -76,18 +69,10 @@ export const Sidebar = () => {
                         <ListItemButton component={RouterLink} to="/server/usage" sx={{ pl: 6 }}>
                             <ListItemText primary="사용량" />
                         </ListItemButton>
-                        <ListItemButton
-                            component={RouterLink}
-                            to="/server/network-usage"
-                            sx={{ pl: 6 }}
-                        >
+                        <ListItemButton component={RouterLink} to="/server/network" sx={{ pl: 6 }}>
                             <ListItemText primary="네트워크" />
                         </ListItemButton>
-                        <ListItemButton
-                            component={RouterLink}
-                            to="/server/disk-usage"
-                            sx={{ pl: 6 }}
-                        >
+                        <ListItemButton component={RouterLink} to="/server/disk" sx={{ pl: 6 }}>
                             <ListItemText primary="파일" />
                         </ListItemButton>
                     </List>
@@ -106,9 +91,9 @@ export const Sidebar = () => {
                         <ListItemButton component={RouterLink} to="/log/live" sx={{ pl: 6 }}>
                             <ListItemText primary="실시간 로그" />
                         </ListItemButton>
-                        <ListItemButton component={RouterLink} to="/log/view" sx={{ pl: 6 }}>
+                        {/* <ListItemButton component={RouterLink} to="/log/view" sx={{ pl: 6 }}>
                             <ListItemText primary="로그 보기" />
-                        </ListItemButton>
+                        </ListItemButton> */}
                     </List>
                 </Collapse>
 
@@ -122,7 +107,7 @@ export const Sidebar = () => {
                 </ListItemButton>
                 <Collapse in={openContainer} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        <ListItemButton component={RouterLink} to="/container/info" sx={{ pl: 6 }}>
+                        <ListItemButton component={RouterLink} to="/container" sx={{ pl: 6 }}>
                             <ListItemText primary="배포상태" />
                         </ListItemButton>
                     </List>

@@ -9,10 +9,10 @@ import DiskUsagePage from '../domains/server/pages/DiskUsagePage';
 
 // LOG
 import LogLivePage from '../domains/log/pages/LogLivePage';
-import LogViewPage from '../domains/log/pages/LogViewPage';
 
 // CONTAINER
 import ContainerPage from '../domains/container/pages/ContainerPage';
+import ContainerDetailPage from '../domains/container/pages/ContainerDetailPage';
 
 // 도메인별 라우트 그룹
 const dashboardRoutes = [
@@ -28,11 +28,11 @@ const serverRoutes = [
         element: <ServerUsagePage />,
     },
     {
-        path: 'server/network-usage',
+        path: 'server/network',
         element: <NetworkUsagePage />,
     },
     {
-        path: 'server/disk-usage',
+        path: 'server/disk',
         element: <DiskUsagePage />,
     },
 ];
@@ -42,16 +42,20 @@ const logRoutes = [
         path: 'log/live',
         element: <LogLivePage />,
     },
-    {
-        path: 'log/view',
-        element: <LogViewPage />,
-    },
+    // {
+    //     path: 'log/view',
+    //     element: <LogViewPage />,
+    // },
 ];
 
 const containerRoutes = [
     {
-        path: 'container/info',
+        path: 'container',
         element: <ContainerPage />,
+    },
+    {
+        path: 'container/:id',
+        element: <ContainerDetailPage />,
     },
 ];
 
