@@ -2,7 +2,7 @@ import { Box, Button, Paper, TextField, Typography, useTheme, Divider } from '@m
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const containerList = ['nextuse-api', 'ray-server', 'upload-server'];
 const logLevels = ['ALL', 'INFO', 'WARN', 'ERROR'];

@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { ContainerController } from '../controller/container-http.controller';
 import { asyncHandler } from '../../common/middleware/async-handler';
-import { verifyControlKey } from '../../common/middleware/verify-control-key';
 
 const containerRouter: Router = Router();
 const containerController: ContainerController = new ContainerController();
@@ -17,16 +16,16 @@ containerRouter.get('/status', asyncHandler(containerController.getContainerStat
 
 /** 제어 API 보안코드 인증 필요 */
 // POST /api/container/start
-containerRouter.post('/start', verifyControlKey, asyncHandler(containerController.startContainer));
+// containerRouter.post('/start', verifyControlKey, asyncHandler(containerController.startContainer));
 
-// POST /api/container/stop
-containerRouter.post('/stop', verifyControlKey, asyncHandler(containerController.startContainer));
+// // POST /api/container/stop
+// containerRouter.post('/stop', verifyControlKey, asyncHandler(containerController.startContainer));
 
-// POST /api/container/restart
-containerRouter.post(
-    '/restart',
-    verifyControlKey,
-    asyncHandler(containerController.reStartContainer),
-);
+// // POST /api/container/restart
+// containerRouter.post(
+//     '/restart',
+//     verifyControlKey,
+//     asyncHandler(containerController.reStartContainer),
+// );
 
 export { containerRouter };
