@@ -63,7 +63,6 @@ export const DiskUsagePage = () => {
         statusLabel: c.isActive ? 'Active' : 'Stopped',
     }));
 
-    console.log(mounts);
     return (
         <Box sx={{ px: 4, py: 3, display: 'grid', gap: 4 }}>
             <Typography variant="h5" fontWeight="bold">
