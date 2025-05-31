@@ -1,6 +1,7 @@
 import { IncomingMessage } from 'http';
 import WebSocket from 'ws';
 import { parse } from 'url';
+import { CONFIG } from '../_config/constants';
 
 /**
  * agent -> backend -> client 를 중계하는 WebSocket 브릿지 유틸
@@ -33,7 +34,7 @@ export const bridgeWebSocket = ({
         .map(([key, val]) => `${key}=${encodeURIComponent(String(val))}`)
         .join('&');
 
-    const agentWs = new WebSocket(`ws://localhost:7000/ws/${route}?${queryString}`);
+    const agentWs = new WebSocket(`${CONFIG.AGENT_BASE_WS_URL}/ws/${route}?${queryString}`);
 
     agentWs.on('open', () => {
         onAgentOpen?.();
