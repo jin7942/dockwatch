@@ -23,7 +23,6 @@ export default function LogLivePage() {
 
         const url = new URL(`${CONFIG.WS_BASE_URL}/log/stream`);
         url.searchParams.set('containerId', containerId);
-        console.log(url.toString());
         const ws = new WebSocket(url.toString());
         wsRef.current = ws;
 
@@ -35,9 +34,6 @@ export default function LogLivePage() {
                 console.log(e);
             }
         };
-
-        ws.onerror = () => console.error('WebSocket 오류');
-        ws.onclose = (e) => console.info('WebSocket 종료', e.code, e.reason);
     };
 
     useEffect(() => {
