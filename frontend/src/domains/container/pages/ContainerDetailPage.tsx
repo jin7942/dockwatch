@@ -1,4 +1,4 @@
-import { Box, Typography, Paper, Divider, Button, Chip, Stack } from '@mui/material';
+import { Box, Typography, Paper, Divider, Chip, Stack } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { api } from '../../../common/lib/axios';
@@ -26,9 +26,9 @@ export default function ContainerDetailPage() {
 
     if (!detail) return null;
 
-    const handleAction = async (action: 'start' | 'stop' | 'restart') => {
-        await api.post(`/container/${action}`, { id: detail.id });
-    };
+    // const handleAction = async (action: 'start' | 'stop' | 'restart') => {
+    //     await api.post(`/container/${action}`, { id: detail.id });
+    // };
 
     return (
         <Box sx={{ px: 4, py: 3 }}>
@@ -52,7 +52,7 @@ export default function ContainerDetailPage() {
 
                 <Stack direction="row" spacing={2} alignItems="center">
                     <Chip label={detail.status} color="primary" size="small" />
-                    <Button variant="outlined" onClick={() => handleAction('start')}>
+                    {/* <Button variant="outlined" onClick={() => handleAction('start')}>
                         시작
                     </Button>
                     <Button variant="outlined" onClick={() => handleAction('stop')}>
@@ -60,7 +60,7 @@ export default function ContainerDetailPage() {
                     </Button>
                     <Button variant="outlined" onClick={() => handleAction('restart')}>
                         재시작
-                    </Button>
+                    </Button> */}
                 </Stack>
             </Paper>
         </Box>

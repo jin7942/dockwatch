@@ -12,7 +12,7 @@ import LogLivePage from '../domains/log/pages/LogLivePage';
 
 // CONTAINER
 import ContainerPage from '../domains/container/pages/ContainerPage';
-import ContainerDetailPage from '../domains/container/pages/ContainerDetailPage';
+// import ContainerDetailPage from '../domains/container/pages/ContainerDetailPage';
 
 // 도메인별 라우트 그룹
 const dashboardRoutes = [
@@ -53,10 +53,10 @@ const containerRoutes = [
         path: 'container',
         element: <ContainerPage />,
     },
-    {
-        path: 'container/:id',
-        element: <ContainerDetailPage />,
-    },
+    // {
+    //     path: 'container/:id',
+    //     element: <ContainerDetailPage />,
+    // },
 ];
 
 // 최종 라우터 구성
