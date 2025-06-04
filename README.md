@@ -29,9 +29,18 @@ Dockwatch 프로젝트는 백엔드, 프론트, 에이전트로 구성되어 있
 
 ```bash
 git clone https://github.com/jin7942/dockwatch
+```
+
+```bash
 cd backend # or frontend
+```
+
+```bash
 npm install
-npm run start
+```
+
+```bash
+npm run dev
 ```
 
 # 2. API 명세
@@ -172,7 +181,7 @@ src/
 -   GitHub 저장소
     -   Dockwatch: https://github.com/jin7942/dockwatch
     -   Agent: https://github.com/jin7942/dockwatch-agent
--   코딩 컨벤션 : https://github.com/jin7942/dev-guide
+-   코딩 컨벤션 : https://github.com/jin7942/dev-guide/blob/main/typescript-nodejs-convention.md
 
 # 6. 시스템 요구 사항
 

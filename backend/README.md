@@ -1,6 +1,6 @@
 # 1. dockwatch-backend
 
-Dockwatch 프로젝트에서 클라이언트와 Agent사이에 위치하여 통신 중계를 담당하는 WAS입니다. 컨테이너 제어 API에 대한 인증 및 인가를 담당하며, 클라이언트([dockwatch-frontend](https://github.com/jin7942/dockwatch/frontend))가 Agent에 직접 접근할 수 없도록 합니다.
+Dockwatch 프로젝트에서 클라이언트와 Agent사이에 위치하여 통신 중계를 담당하는 WAS입니다. 컨테이너 제어 API에 대한 인증 및 인가를 담당하며, 클라이언트([dockwatch-frontend](https://github.com/jin7942/dockwatch/tree/main/frontend))가 Agent에 직접 접근할 수 없도록 합니다.
 
 [dockwatch-agent](https://github.com/jin7942/dockwatch-agent)와 동일한 구조로 제작 되었습니다.
 
@@ -26,7 +26,7 @@ npm install
 ```
 
 ```bash
-npm start
+npm run dev
 ```
 
 # 2. API 명세서
@@ -36,7 +36,3 @@ npm start
 # 3. 시스템 요구 사항
 
 -   Node.js 18+
-
-# 4. 라이선스
-
-MIT
