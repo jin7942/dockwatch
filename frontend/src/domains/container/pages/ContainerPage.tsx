@@ -1,4 +1,4 @@
-import { Box, Chip, Paper, Typography, Button } from '@mui/material';
+import { Box, Chip, Paper, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 
 import { api } from '../../../common/lib/axios';
@@ -80,15 +80,6 @@ export default function ContainerPage() {
                                 fontWeight: 'bold',
                             }}
                         />
-                        <Button size="small" variant="outlined">
-                            시작
-                        </Button>
-                        <Button size="small" variant="outlined">
-                            중지
-                        </Button>
-                        <Button size="small" variant="outlined">
-                            재시작
-                        </Button>
                     </Box>
                 </Paper>
             ))}
