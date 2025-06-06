@@ -45,7 +45,7 @@ npm run dev
 
 # 2. API 명세
 
-모든 HTTP/WS 엔드포인트와 요청/응답 형식은 별도 문서인 [DOCUMENT.md](https://github.com/jin7942/dockwatch-agent/DOCUMENT.md)에 정리되어 있습니다.
+모든 HTTP/WS 엔드포인트와 요청/응답 형식은 별도 문서인 [DOCUMENT.md](https://github.com/jin7942/dockwatch-agent/blob/main/DOCUMENT.md)에 정리되어 있습니다.
 
 # 3. 프로젝트 구조
 
